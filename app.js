@@ -7,21 +7,21 @@ const port = 3000
 app.use(express.json()) // This line is necessary for Express to be able to parse JSON in request body's
 
 const favoriteMovieList = [{
-  title: "Star Wars",
-  starRating: 5,
-  isRecommended: true,
-  createdAt: new Date(),
-  lastModified: new Date()
+    title: "Star Wars",
+    starRating: 5,
+    isRecommended: true,
+    createdAt: new Date(),
+    lastModified: new Date()
 }, {
-  title: "The Avengers",
-  starRating: 4,
-  isRecommended: true,
-  createdAt: new Date(),
-  lastModified: new Date()
+    title: "The Avengers",
+    starRating: 4,
+    isRecommended: true,
+    createdAt: new Date(),
+    lastModified: new Date()
 }];
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+    res.send('Hello World!')
 });
 
 app.get('/all-movies', (req, res) => {
@@ -30,6 +30,22 @@ app.get('/all-movies', (req, res) => {
         favoriteMovieList
     });
 });
+
+// THIS CODE IS THE SECOND STRETCH GOAL. It works.
+
+// app.get("/all-movies", (req, res) => {
+
+//     const rating = parseInt(req.query.starRating)
+
+//     const filteredMovies = favoriteMovieList.filter((movie) => {
+//         return movie.starRating >= rating // Filter movieList to return all movies greater than the rating query param
+//     })
+
+//     res.json({
+//         success: true,
+//         dogList: filteredMovies
+//     })
+// })
 
 app.get('/single-movie/:titleToFind', (req, res) => {
     console.log(req.params.titleToFind);
@@ -41,7 +57,7 @@ app.get('/single-movie/:titleToFind', (req, res) => {
         success: true,
         foundMovie,
     })
-} );
+});
 
 app.post('/new-movie', (req, res) => {
 
@@ -67,14 +83,14 @@ app.post('/new-movie', (req, res) => {
         return
     }
 
-    let newMovie= {};
+    let newMovie = {};
 
     newMovie.title = req.body.title;
     newMovie.starRating = req.body.starRating;
     newMovie.isRecommended = req.body.isRecommended;
     newMovie.createdAt = new Date();
     newMovie.lastModified = new Date();
-    
+
     favoriteMovieList.push(newMovie);
 
     res.json({
@@ -95,8 +111,8 @@ app.put("/update-movie/:titleToUpdate", (req, res) => {
     const originalMovieIndex = favoriteMovieList.findIndex((movie) => {
         return movie.title === movieToFind;
     })
-    
-    if (!originalMovie){
+
+    if (!originalMovie) {
         res.json({
             success: false,
             message: "Could not find movie in the list"
@@ -138,7 +154,7 @@ app.delete("/delete-movie/:titleToDelete", (req, res) => {
         return movie.title === movieToDelete;
     })
 
-    favoriteMovieList.splice(indexOfMovie,1);
+    favoriteMovieList.splice(indexOfMovie, 1);
 
     res.json({
         success: true,
@@ -147,5 +163,5 @@ app.delete("/delete-movie/:titleToDelete", (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+    console.log(`Example app listening on port ${port}`)
 })
