@@ -25,7 +25,10 @@ app.get('/', (req, res) => {
 });
 
 app.get('/all-movies', (req, res) => {
-    res.send(favoriteMovieList);
+    res.json({
+        success:true,
+        favoriteMovieList
+    });
 });
 
 app.get('/single-movie/:titleToFind', (req, res) => {
